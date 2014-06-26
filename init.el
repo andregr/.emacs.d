@@ -30,9 +30,19 @@
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file 'noerror)
 
-;; Font
-(set-default-font "Monospace-9")
+;; el-get and elpa integration
+(require 'el-get-elpa)
 
 ;; Theme
 (el-get-install 'solarized-theme)
 (load-theme 'solarized-light t)
+
+;; Fix font when on Linux GUI
+(if (eq system-type 'gnu/linux)
+    (set-default-font "Monospace-9"))
+
+;; Fix PATH when on OSX GUI
+(if (eq system-type 'darwin)
+    (el-get-install 'exec-path-from-shell)
+    (when (memq window-system '(mac ns))
+        (exec-path-from-shell-initialize)))
