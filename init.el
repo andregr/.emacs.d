@@ -38,11 +38,11 @@
 (load-theme 'solarized-light t)
 
 ;; Fix font when on Linux GUI
-(if (eq system-type 'gnu/linux)
+(when (eq system-type 'gnu/linux) 
     (set-default-font "Monospace-9"))
 
 ;; Fix PATH when on OSX GUI
-(if (eq system-type 'darwin)
+(when (eq system-type 'darwin)
     (el-get-install 'exec-path-from-shell)
     (when (memq window-system '(mac ns))
         (exec-path-from-shell-initialize)))

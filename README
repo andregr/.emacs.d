@@ -1,10 +1,23 @@
+Notice: 
+
+On the first run sometimes some downloads fail and require restarting
+until everything succeeds. 
+
+TODO:
+
+Sometimes commands on init.el fail if they are run right after their 
+package is installed, which also requires restarting.
+
 Features:
 
 * From: http://tim.dysinger.net/posts/2014-02-18-haskell-with-emacs.html
-    * No toolbars
-    * No local Emacs backups
-    * Pre-configured haskell-mode (cabal repl, ghc-mod, build on save, error markers, get symbol type and info)
-        - Edited ghc-mod.rcp to remove flymake, since it creates annoying _flymake files. 
-          Just save to build - errors should be marked on the source.
-* Better font for GUI mode
+    ** No toolbars
+    ** No local Emacs backups
+    ** Pre-configured haskell-mode (cabal repl, ghc-mod, build on save, 
+      error markers, get symbol type and info)
+        *** Edited ghc-mod.rcp to remove flymake, since it creates annoying 
+	  _flymake files. Just save to build - errors should be marked on 
+	  the source.
+* Better font for GUI mode on Linux
+* Fix PATH on GUI mode on OS X
 * Solarized theme (requires instalation first - M-X > el-get-install > solarized-theme)
