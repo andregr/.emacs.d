@@ -41,6 +41,10 @@
 (when (eq system-type 'gnu/linux) 
     (set-default-font "Monospace-9"))
 
+;; Window size
+(add-to-list 'default-frame-alist (cons 'width 160))
+(add-to-list 'default-frame-alist (cons 'height 70))
+
 ;; Fix PATH when on OSX GUI
 (when (eq system-type 'darwin)
     (el-get-install 'exec-path-from-shell)
