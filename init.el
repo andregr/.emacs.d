@@ -33,6 +33,8 @@
 ;; el-get and elpa integration
 (require 'el-get-elpa)
 
+(cua-mode)
+
 ;; Theme
 (el-get-install 'solarized-theme)
 (load-theme 'solarized-light t)
@@ -50,3 +52,11 @@
     (el-get-install 'exec-path-from-shell)
     (when (memq window-system '(mac ns))
         (exec-path-from-shell-initialize)))
+
+;; Disable git-commit flyspell
+(eval-after-load "git-commit-mode"
+  '(cond
+    ((boundp 'git-commit-mode-hook) ; old
+     (remove-hook 'git-commit-mode-hook 'flyspell-mode))
+    ((boundp 'git-commit-setup-hook) ; new
+     (remove-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))))
