@@ -60,3 +60,21 @@
      (remove-hook 'git-commit-mode-hook 'flyspell-mode))
     ((boundp 'git-commit-setup-hook) ; new
      (remove-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))))
+
+;; Comment regions
+(defun comment ()
+  (interactive)
+  (let ((start (line-beginning-position))
+	(end (line-end-position)))
+    (when (region-active-p)
+      (setq start (save-excursion
+		    (goto-char (region-beginning))
+		    (beginning-of-line)
+		    (point))
+	    end (save-excursion
+		  (goto-char (region-end))
+		  (end-of-line)
+		  (point))))
+    (comment-or-uncomment-region start end)))
+
+(global-set-key (kbd "M-;") 'comment)
