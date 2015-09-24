@@ -1,0 +1,12 @@
+;; Based on https://github.com/dimitri/el-get/blob/master/recipes/ProofGeneral.rcp
+(:name "ProofGeneral4.3" ;; Requires Emacs >= 23.3
+       :website "http://proofgeneral.inf.ed.ac.uk/"
+       :description "Proof General is a generic front-end for proof assistants (also known as interactive theorem provers)"
+       :type http-tar
+       :options ("xzf")
+       :url "http://proofgeneral.inf.ed.ac.uk/releases/ProofGeneral-4.3pre150313.tgz"
+       :build `(("make" "-C" "ProofGeneral" "clean")
+                ("sed" "-i" "s/setq byte-compile-error-on-warn t//" "ProofGeneral/Makefile")
+                ("make" "-C" "ProofGeneral" "compile" ,(concat "EMACS=" el-get-emacs)))
+       :load  ("ProofGeneral/generic/proof-site.el")
+       :info "./ProofGeneral/doc/")

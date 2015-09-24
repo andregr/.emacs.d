@@ -26,7 +26,8 @@
       (eval-print-last-sexp)))
   
   (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user")
-  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/haskell-mode")
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/haskell")
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/coq")
 
   (require 'el-get-elpa)
   
@@ -35,7 +36,8 @@
    '(el-get                  ; el-get is self-hosting
      solarized-emacs
      esup
-     haskell-mode))
+     haskell-mode
+     ProofGeneral4.3))
   (el-get 'sync my:el-get-packages))
 
 (defun init-customize-display ()
