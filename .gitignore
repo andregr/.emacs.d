@@ -5,3 +5,4 @@ auto-save-list
 el-get
 elpa/archives/gnu/*
 eshell/history
+url/
