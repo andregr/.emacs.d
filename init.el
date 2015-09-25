@@ -113,6 +113,9 @@
   (setq haskell-process-path-cabal "~/.cabal/bin/cabal")
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
 
+(defun init-customize-coq ()
+  (setq proof-electric-terminator-enable 1))
+
 (init-message "Start")
 (init-customize-basic-settings)
 (init-customize-display)
@@ -121,4 +124,5 @@
 (init-customize-visual)
 (init-customize-git)
 (init-customize-haskell)
+(init-customize-coq)
 (init-message "End")
