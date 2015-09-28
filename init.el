@@ -1,6 +1,41 @@
 (defun init-message (msg)
   (message "(init.el) %s" msg))
 
+(defun init-install-packages ()
+  (init-message "Installing el-get and packages")
+  
+  (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+  (unless (require 'el-get nil 'noerror)
+    (with-current-buffer
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user")
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/haskell")
+  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/coq")
+
+  (require 'el-get-elpa)
+
+  ;; Fix PATH when on OSX GUI. This must be done before
+  ;; installing other packages to ensure the brew versions of GNU
+  ;; tools are used as sometimes they are when necessary.
+  (when (eq system-type 'darwin)
+    (el-get 'sync 'exec-path-from-shell)
+    (require 'exec-path-from-shell)
+    (when (memq window-system '(mac ns))
+      (exec-path-from-shell-initialize)))  
+
+  (setq
+   my:el-get-packages
+   '(el-get                  ; el-get is self-hosting
+     solarized-emacs
+     esup
+     haskell-mode
+     ProofGeneral4.3))
+  (el-get 'sync my:el-get-packages))
+
 (defun init-customize-basic-settings ()
   (init-message "Customizing basic settings")
   
@@ -8,13 +43,7 @@
   (setq x-select-enable-clipboard t)
   
   (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
-	backup-directory-alist `((".*" . ,temporary-file-directory)))
-  
-  ;; Fix PATH when on OSX GUI
-  (when (eq system-type 'darwin)
-    (el-get-install 'exec-path-from-shell)
-    (when (memq window-system '(mac ns))
-      (exec-path-from-shell-initialize))))
+	backup-directory-alist `((".*" . ,temporary-file-directory))))
 
 (defun init-customize-display ()
   (init-message "Customizing display")
@@ -60,31 +89,6 @@
   
   (global-set-key (kbd "C-x C-b") 'ibuffer))
 
-(defun init-customize-el-get ()
-  (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-  (unless (require 'el-get nil 'noerror)
-    (with-current-buffer
-	(url-retrieve-synchronously
-	 "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  
-  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user")
-  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/haskell")
-  (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/coq")
-
-  (require 'el-get-elpa)
-  
-  (setq
-   my:el-get-packages
-   '(el-get                  ; el-get is self-hosting
-     solarized-emacs
-     esup
-     haskell-mode
-     ProofGeneral4.3))
-  (el-get 'sync my:el-get-packages))
-
-
 (defun init-customize-visual ()
   (ido-mode)
   (global-visual-line-mode t)
@@ -97,11 +101,11 @@
   
   ;; Disable git-commit flyspell
   (eval-after-load "git-commit-mode"
-  '(cond
-    ((boundp 'git-commit-mode-hook) ; old
-     (remove-hook 'git-commit-mode-hook 'flyspell-mode))
-    ((boundp 'git-commit-setup-hook) ; new
-     (remove-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))))
+    '(cond
+      ((boundp 'git-commit-mode-hook) ; old
+       (remove-hook 'git-commit-mode-hook 'flyspell-mode))
+      ((boundp 'git-commit-setup-hook) ; new
+       (remove-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell))))
 
   ;; Disable "Loading vc-git"
   (setq vc-handled-backends nil))
@@ -117,10 +121,10 @@
   (setq proof-electric-terminator-enable 1))
 
 (init-message "Start")
+(init-install-packages)
 (init-customize-basic-settings)
 (init-customize-display)
 (init-customize-bindings)
-(init-customize-el-get)
 (init-customize-visual)
 (init-customize-git)
 (init-customize-haskell)
