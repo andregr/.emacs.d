@@ -94,6 +94,7 @@
   (global-visual-line-mode t)
   (global-linum-mode 1)
   (global-hl-line-mode)
+  (show-paren-mode)
   (load-theme 'solarized-light t))  
 
 (defun init-customize-git ()
