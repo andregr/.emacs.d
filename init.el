@@ -17,6 +17,9 @@
   (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/coq")
 
   (require 'el-get-elpa)
+  ;; Build elpa recipes if they don't exist
+  (unless (file-directory-p el-get-recipe-path-elpa)
+    (el-get-elpa-build-local-recipes))
 
   ;; Fix PATH when on OSX GUI. This must be done before
   ;; installing other packages to ensure the brew versions of GNU
@@ -31,6 +34,7 @@
    my:el-get-packages
    '(el-get                  ; el-get is self-hosting
      solarized-emacs
+     idle-highlight-mode
      esup
      haskell-mode
      ProofGeneral4.3))
@@ -90,12 +94,27 @@
   (global-set-key (kbd "C-x C-b") 'ibuffer))
 
 (defun init-customize-visual ()
+  (init-message "Customizing visual")
+  
   (ido-mode)
   (global-visual-line-mode t)
   (global-linum-mode 1)
   (global-hl-line-mode)
   (show-paren-mode)
-  (load-theme 'solarized-light t))  
+
+  (define-globalized-minor-mode global-idle-highlight-mode
+    idle-highlight-mode idle-highlight-mode)
+  (global-idle-highlight-mode t)
+  
+  (setq idle-highlight-idle-time 0)
+  (load-theme 'solarized-light t)
+
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(idle-highlight ((t (:background "light gray"))))))  
 
 (defun init-customize-git ()
   (init-message "Customizing git")
@@ -112,6 +131,8 @@
   (setq vc-handled-backends nil))
 
 (defun init-customize-haskell ()
+  (init-message "Customizing Haskell")
+  
   ;; Haskell mode is defined by the recipe in ~/.emacs.d/el-get-user/haskell.
 
   ;; Setup interactive mode
@@ -119,6 +140,8 @@
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
 
 (defun init-customize-coq ()
+  (init-message "Customizing Coq")
+  
   (setq proof-electric-terminator-enable 1))
 
 (init-message "Start")
