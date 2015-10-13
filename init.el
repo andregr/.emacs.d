@@ -102,6 +102,7 @@
   (global-hl-line-mode)
   (show-paren-mode)
   (blink-cursor-mode 0)
+  (setq-default cursor-type 'bar)
 
   (define-globalized-minor-mode global-idle-highlight-mode
     idle-highlight-mode idle-highlight-mode)
