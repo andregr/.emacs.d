@@ -101,6 +101,7 @@
   (global-linum-mode 1)
   (global-hl-line-mode)
   (show-paren-mode)
+  (blink-cursor-mode 0)
 
   (define-globalized-minor-mode global-idle-highlight-mode
     idle-highlight-mode idle-highlight-mode)
