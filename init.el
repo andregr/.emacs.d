@@ -111,6 +111,9 @@
   (setq idle-highlight-idle-time 0)
   (load-theme 'solarized-light t)
 
+  ;; Region selection with less constrast
+  (set-face-attribute 'region nil :background "#d3d3d3" :foreground "#000000")
+
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
