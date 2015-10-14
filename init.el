@@ -2,7 +2,7 @@
   (message "(init.el) %s" msg))
 
 (defun init-install-packages ()
-  (init-message "Installing el-get and packages")
+  (init-message "Initializing packages")
   
   (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
   (unless (require 'el-get nil 'noerror)
