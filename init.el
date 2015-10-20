@@ -98,8 +98,8 @@
   
   (ido-mode)
   (global-visual-line-mode t)
-  (global-linum-mode 1)
   (global-hl-line-mode)
+  (global-linenum-mode 0)  
   (show-paren-mode)
   (blink-cursor-mode 0)
   (setq-default cursor-type 'bar)
